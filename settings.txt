@@ -1,2 +1,2 @@
 Compression Ratio: 0.5
-Naming Convention: $date
+Naming Convention: $milisecs

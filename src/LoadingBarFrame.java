@@ -2,28 +2,49 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LoadingBarFrame {
-    private final JFrame frame;
-    private final JProgressBar progressBar;
-    private final int max;
+    private JFrame frame = new JFrame("Loading...");
+    private JProgressBar progressBar = new JProgressBar();
+    private int max;
 
     public LoadingBarFrame(int max) {
         this.max = max;
-        frame = new JFrame("Loading...");
-        frame.setSize(400, 100);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new FlowLayout());
-        progressBar = new JProgressBar();
-        progressBar.setMaximum(max);
+        progressBar.setValue(10);
+        progressBar.setBounds(0,0,420,50);
+        progressBar.setStringPainted(true);
+
         frame.add(progressBar);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(420,420);
+        frame.setLayout(null);
         frame.setVisible(true);
+        fill();
+    }
+
+    public void fill()
+    {
+        int counter =0;
+        while(counter <= 100)
+        {
+            try
+            {
+                Thread.sleep(1000);
+                progressBar.setValue(counter);
+            }
+            catch(Exception e)
+            {
+
+            }
+        }
     }
 
     public void updateProgress(int current) {
-        SwingUtilities.invokeLater(() -> {
-            progressBar.setValue(current);
-            if (current == max) {
-                frame.dispose();
-            }
-        });
+        progressBar.setValue(current);
+        if (current == max) {
+            //frame.dispose();
+            frame.setVisible(false);
+        }
     }
 }
+
+
+

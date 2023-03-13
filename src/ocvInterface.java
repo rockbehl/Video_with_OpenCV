@@ -21,14 +21,16 @@ public class ocvInterface {
         StringBuilder outName = new StringBuilder("testFiles/");
 
         File outFile = compressVideo(input.toString(), cR);
-        String[] nCarr = nC.split("//$");
+        String[] nCarr = nC.split("$");
         for (int i = 0; i < nCarr.length; i++) {
-            switch (nCarr[i].toLowerCase()){
-                case "milisec" -> outName.append(System.currentTimeMillis());
-                case "date" -> outName.append(LocalDate.now());
-                case "action" -> outName.append("comp");
+            if (!nCarr[i].equals("$")) {
+                switch (nCarr[i].toLowerCase()) {
+                    case "milisec" -> outName.append(System.currentTimeMillis());
+                    case "date" -> outName.append(LocalDate.now());
+                    case "action" -> outName.append("comp");
+                }
             }
-            outName.append('_');
+            outName.append(System.currentTimeMillis()+'_');
         }
         outName.append('_');
         outName.append(pos);
@@ -50,7 +52,7 @@ public class ocvInterface {
                 case "date" -> outName.append(LocalDate.now());
                 case "action" -> outName.append("cutAt"+sT+eT);
             }
-            outName.append('_');
+            outName.append(System.currentTimeMillis()+'_');
         }
         outName.append(".mov");
         outFile.renameTo(new File(outName.toString()));
@@ -89,7 +91,7 @@ public class ocvInterface {
         writer.set(Videoio.VIDEOWRITER_PROP_QUALITY, compressionRatio);
 
         // Read and write the video frames
-        LoadingBarFrame progressReport = new LoadingBarFrame(((int) framesMax));
+        //LoadingBarFrame progressReport = new LoadingBarFrame(((int) framesMax));
 
         Mat frame = new Mat();
         int state = 0;
@@ -98,7 +100,8 @@ public class ocvInterface {
             state += 1;
             System.out.println("check in: " + state);
             if (state % 20 == 0) {
-                progressReport.updateProgress(state);
+                System.out.println("banna");
+                //progressReport.updateProgress(state);
             }
         }
 
